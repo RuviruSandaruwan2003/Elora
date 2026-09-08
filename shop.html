@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop — Elora</title>
+<meta name="description" content="Shop Elora's collection of premium luggage, travel bags and leather shoes.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav">
+    <a href="index.html" class="logo">
+      <span class="mark">ELORA</span>
+      <span class="tag">MOVE IN STYLE</span>
+    </a>
+    <ul class="nav-links js-nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html" class="active">Shop</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="icon-btn js-search-toggle" aria-label="Search">
+        <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></svg>
+      </button>
+      <a class="icon-btn" href="https://instagram.com/elora.lk" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1"/></svg>
+      </a>
+      <button class="icon-btn js-cart-open" aria-label="Open cart">
+        <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 8h12l-1 12.2a2 2 0 0 1-2 1.8H9a2 2 0 0 1-2-1.8L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+        <span class="cart-count js-cart-count" style="display:none;">0</span>
+      </button>
+      <button class="icon-btn nav-burger js-burger" aria-label="Menu">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+      </button>
+    </div>
+  </nav>
+  <div class="search-flyout js-search-flyout">
+    <form class="js-search-form">
+      <input type="search" name="q" placeholder="Search for shoes, luggage, bags…" aria-label="Search products">
+      <button type="submit" class="btn btn-primary btn-sm">Search</button>
+    </form>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" style="padding-bottom:24px;">
+    <div>
+      <div class="eyebrow">Premium Luggage &amp; Shoes</div>
+      <h1>Shop Our Collection</h1>
+      <p>From stylish luggage to timeless footwear, find everything you need for your next journey.</p>
+    </div>
+    <div class="hero-art" id="hero-shop-art" style="background:linear-gradient(135deg,#E6D3B8,#C9A27E); border-radius:8px; padding:30px; display:flex; align-items:center; justify-content:center;">
+      <div style="width:42%;"></div>
+    </div>
+  </section>
+
+  <div class="duo" style="padding-top:0;">
+    <a class="banner" href="#" data-cat="Luggage" style="background:linear-gradient(120deg,#4A2E1C,#7C4E2E); min-height:150px;">
+      <h3 style="font-size:1.2rem;">Luggage</h3>
+      <p>Travel in style →</p>
+    </a>
+    <a class="banner" href="#" data-cat="Shoes" style="background:linear-gradient(120deg,#2B2420,#6B4226); min-height:150px;">
+      <h3 style="font-size:1.2rem;">Shoes</h3>
+      <p>Step in style →</p>
+    </a>
+  </div>
+
+  <!-- SHOP LAYOUT -->
+  <div class="shop-layout" style="padding-bottom:70px;">
+    <aside class="filters">
+      <h3>Filter by</h3>
+
+      <div class="filter-group">
+        <h4>Category</h4>
+        <label class="check-row"><input type="checkbox" class="js-cat" value="Luggage"> Luggage</label>
+        <label class="check-row"><input type="checkbox" class="js-cat" value="Shoes"> Shoes</label>
+      </div>
+
+      <div class="filter-group">
+        <h4>Price</h4>
+        <label class="check-row"><input type="checkbox" class="js-price" value="0-10000"> Under LKR 10,000</label>
+        <label class="check-row"><input type="checkbox" class="js-price" value="10000-20000"> LKR 10,000 – 20,000</label>
+        <label class="check-row"><input type="checkbox" class="js-price" value="20000-30000"> LKR 20,000 – 30,000</label>
+        <label class="check-row"><input type="checkbox" class="js-price" value="30000-999999"> Above LKR 30,000</label>
+      </div>
+
+      <div class="filter-group">
+        <h4>Colour</h4>
+        <div class="color-row js-color-filters"></div>
+      </div>
+
+      <div class="filter-group" style="border-bottom:none;">
+        <h4>Size (Shoes)</h4>
+        <label class="check-row"><input type="checkbox" class="js-size" value="6"> UK 6</label>
+        <label class="check-row"><input type="checkbox" class="js-size" value="7"> UK 7</label>
+        <label class="check-row"><input type="checkbox" class="js-size" value="8"> UK 8</label>
+        <label class="check-row"><input type="checkbox" class="js-size" value="9"> UK 9</label>
+        <label class="check-row"><input type="checkbox" class="js-size" value="10"> UK 10</label>
+      </div>
+
+      <button type="button" class="clear-filters js-clear-filters">Clear all filters</button>
+
+      <div class="delivery-note">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" style="flex-shrink:0;"><rect x="1" y="7" width="14" height="10" rx="1"/><path d="M15 10h4l3 3v4h-7z"/><circle cx="6" cy="19" r="1.6"/><circle cx="17.5" cy="19" r="1.6"/></svg>
+        <span>Free islandwide delivery on orders above LKR 15,000</span>
+      </div>
+    </aside>
+
+    <div>
+      <div class="toolbar">
+        <div class="js-result-count" style="color:var(--ink-soft); font-size:.9rem;"></div>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <label for="sortSelect" style="font-size:.9rem; color:var(--ink-soft);">Sort by</label>
+          <select id="sortSelect" class="js-sort">
+            <option value="newest">Newest</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="name-asc">Name: A–Z</option>
+          </select>
+        </div>
+      </div>
+      <div class="product-grid js-shop-grid" style="padding:0;"></div>
+      <div class="pagination js-pagination"></div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <a href="index.html" class="logo"><span class="mark">ELORA</span><span class="tag">MOVE IN STYLE</span></a>
+      <p>Stylish journeys. Lasting impressions.</p>
+      <div class="social-row">
+        <a href="https://instagram.com/elora.lk" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M15 8h-2a2 2 0 0 0-2 2v2H9v3h2v7h3v-7h2.2l.8-3H14v-1.6c0-.5.3-.9.9-.9H16V8Z"/></svg></a>
+      </div>
+    </div>
+    <div>
+      <h5>Quick Links</h5>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Shop Categories</h5>
+      <ul>
+        <li><a href="shop.html?category=Luggage">Luggage</a></li>
+        <li><a href="shop.html?category=Shoes">Shoes</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Join Our Newsletter</h5>
+      <p>Be the first to know about new arrivals and exclusive offers.</p>
+      <form class="newsletter-form js-newsletter">
+        <input type="email" placeholder="Your email address" required>
+        <button type="submit" aria-label="Subscribe">→</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><span>© 2026 Elora. All rights reserved.</span><span>Move in Style</span></div></div>
+</footer>
+
+<div class="cart-overlay js-cart-overlay"></div>
+<aside class="cart-drawer js-cart-drawer" aria-label="Shopping cart">
+  <div class="cart-head">
+    <h3>Your Bag</h3>
+    <button class="close-btn js-cart-close" aria-label="Close cart">&times;</button>
+  </div>
+  <div class="cart-items js-cart-items"></div>
+  <div class="cart-summary js-cart-summary"></div>
+</aside>
+<div class="toast js-toast"></div>
+
+<script src="products.js"></script>
+<script src="app.js"></script>
+<script>
+document.getElementById('hero-shop-art').querySelector('div').innerHTML = eloraArt('cabin', 'olive');
+
+/* build colour filter swatches from the full palette actually used */
+const usedColors = [...new Set(ELORA_PRODUCTS.flatMap(p => p.colors))];
+document.querySelector('.js-color-filters').innerHTML = usedColors.map(c =>
+  `<span class="swatch js-color-filter" data-color="${c}" style="background:${ELORA_COLORS[c].hex}" title="${ELORA_COLORS[c].name}"></span>`
+).join('');
+
+const PAGE_SIZE = 6;
+let state = { q: '', cats: [], prices: [], colors: [], sizes: [], sort: 'newest', page: 1 };
+
+/* read query params on load (?q=... or ?category=...) */
+const params = new URLSearchParams(window.location.search);
+if(params.get('q')) state.q = params.get('q');
+if(params.get('category')) state.cats = [params.get('category')];
+
+function priceInRange(price, rangeStr){
+  const [min, max] = rangeStr.split('-').map(Number);
+  return price >= min && price <= max;
+}
+
+function getFiltered(){
+  let list = ELORA_PRODUCTS.slice();
+
+  if(state.q){
+    const q = state.q.toLowerCase();
+    list = list.filter(p => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
+  }
+  if(state.cats.length){
+    list = list.filter(p => state.cats.includes(p.category));
+  }
+  if(state.prices.length){
+    list = list.filter(p => state.prices.some(r => priceInRange(p.price, r)));
+  }
+  if(state.colors.length){
+    list = list.filter(p => p.colors.some(c => state.colors.includes(c)));
+  }
+  if(state.sizes.length){
+    list = list.filter(p => p.sizes && p.sizes.some(s => state.sizes.includes(String(s))));
+  }
+
+  switch(state.sort){
+    case 'price-asc':  list.sort((a,b) => a.price - b.price); break;
+    case 'price-desc': list.sort((a,b) => b.price - a.price); break;
+    case 'name-asc':   list.sort((a,b) => a.name.localeCompare(b.name)); break;
+    default: break; /* newest = catalogue order */
+  }
+  return list;
+}
+
+function renderShop(){
+  const grid = document.querySelector('.js-shop-grid');
+  const filtered = getFiltered();
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  state.page = Math.min(state.page, totalPages);
+  const start = (state.page - 1) * PAGE_SIZE;
+  const pageItems = filtered.slice(start, start + PAGE_SIZE);
+
+  document.querySelector('.js-result-count').textContent =
+    filtered.length === 0 ? 'No products found' : `Showing ${start+1}–${Math.min(start+PAGE_SIZE, filtered.length)} of ${filtered.length} products`;
+
+  if(pageItems.length === 0){
+    grid.innerHTML = `<div class="no-results">No products match your search or filters. <button class="btn btn-outline btn-sm js-reset-inline" style="margin-top:14px;">Clear filters</button></div>`;
+    grid.querySelector('.js-reset-inline')?.addEventListener('click', resetFilters);
+  } else {
+    grid.innerHTML = pageItems.map(buildProductCard).join('');
+    wireProductGrid(grid);
+  }
+
+  const pag = document.querySelector('.js-pagination');
+  if(totalPages <= 1){ pag.innerHTML = ''; }
+  else{
+    let html = `<button ${state.page===1?'disabled':''} data-p="${state.page-1}">‹</button>`;
+    for(let i=1;i<=totalPages;i++){
+      html += `<button class="${i===state.page?'active':''}" data-p="${i}">${i}</button>`;
+    }
+    html += `<button ${state.page===totalPages?'disabled':''} data-p="${state.page+1}">›</button>`;
+    pag.innerHTML = html;
+    pag.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+      state.page = Number(b.dataset.p);
+      renderShop();
+      document.querySelector('.shop-layout').scrollIntoView({behavior:'smooth', block:'start'});
+    }));
+  }
+}
+
+function resetFilters(){
+  state = { q:'', cats:[], prices:[], colors:[], sizes:[], sort:'newest', page:1 };
+  document.querySelectorAll('.js-cat, .js-price, .js-size').forEach(el => el.checked = false);
+  document.querySelectorAll('.js-color-filter').forEach(el => el.classList.remove('active'));
+  document.querySelector('.js-sort').value = 'newest';
+  history.replaceState(null, '', 'shop.html');
+  renderShop();
+}
+
+/* wire filter inputs */
+document.querySelectorAll('.js-cat').forEach(el => {
+  if(state.cats.includes(el.value)) el.checked = true;
+  el.addEventListener('change', () => {
+    state.cats = [...document.querySelectorAll('.js-cat:checked')].map(e => e.value);
+    state.page = 1;
+    renderShop();
+  });
+});
+document.querySelectorAll('.js-price').forEach(el => el.addEventListener('change', () => {
+  state.prices = [...document.querySelectorAll('.js-price:checked')].map(e => e.value);
+  state.page = 1;
+  renderShop();
+}));
+document.querySelectorAll('.js-size').forEach(el => el.addEventListener('change', () => {
+  state.sizes = [...document.querySelectorAll('.js-size:checked')].map(e => e.value);
+  state.page = 1;
+  renderShop();
+}));
+document.querySelectorAll('.js-color-filter').forEach(el => el.addEventListener('click', () => {
+  el.classList.toggle('active');
+  state.colors = [...document.querySelectorAll('.js-color-filter.active')].map(e => e.dataset.color);
+  state.page = 1;
+  renderShop();
+}));
+document.querySelector('.js-sort').addEventListener('change', (e) => {
+  state.sort = e.target.value;
+  renderShop();
+});
+document.querySelector('.js-clear-filters').addEventListener('click', resetFilters);
+
+/* category banners */
+document.querySelectorAll('[data-cat]').forEach(a => a.addEventListener('click', (e) => {
+  e.preventDefault();
+  state.cats = [a.dataset.cat];
+  document.querySelectorAll('.js-cat').forEach(el => el.checked = el.value === a.dataset.cat);
+  state.page = 1;
+  renderShop();
+  document.querySelector('.shop-layout').scrollIntoView({behavior:'smooth', block:'start'});
+}));
+
+/* live search from the nav flyout also updates this page in place */
+const navSearchForm = document.querySelector('.js-search-form');
+navSearchForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  state.q = navSearchForm.querySelector('input').value.trim();
+  state.page = 1;
+  renderShop();
+  document.querySelector('.js-search-flyout').classList.remove('open');
+});
+if(state.q){
+  document.querySelector('.js-search-flyout input').value = state.q;
+}
+
+renderShop();
+</script>
+</body>
+</html>
