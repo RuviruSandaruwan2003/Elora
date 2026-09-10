@@ -17,9 +17,9 @@ const ELORA_COLORS = {
 const ELORA_ART = {
 trolley(c) {
     const imageMap = {
-      beige: "2-beige.png",
-      gray: "2-gray.png",
-      black: "2-black.png"
+      beige: "2.png",
+      gray: "3.png",
+      black: "4.png"
     };
     return `<div style="width:100%; height:100%; overflow:hidden; border-radius:14px;">
       <img src="${imageMap[c]}" style="width:100%; height:100%; object-fit:cover; display:block; border-radius:14px;">
