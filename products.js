@@ -15,19 +15,16 @@ const ELORA_COLORS = {
 
 /* ---- SVG illustrations (flat, brand-toned, generated per colour) ---- */
 const ELORA_ART = {
-  trolley(c){
-    const s = ELORA_COLORS[c];
-    return `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-      <rect x="55" y="30" width="90" height="130" rx="14" fill="${s.hex}"/>
-      <rect x="55" y="30" width="90" height="130" rx="14" fill="none" stroke="${s.shade}" stroke-width="3"/>
-      <line x1="80" y1="30" x2="80" y2="160" stroke="${s.shade}" stroke-width="2" opacity=".6"/>
-      <line x1="120" y1="30" x2="120" y2="160" stroke="${s.shade}" stroke-width="2" opacity=".6"/>
-      <rect x="88" y="16" width="24" height="16" rx="4" fill="none" stroke="${s.shade}" stroke-width="4"/>
-      <rect x="70" y="70" width="60" height="10" rx="5" fill="${s.shade}" opacity=".8"/>
-      <circle cx="72" cy="168" r="8" fill="${s.shade}"/>
-      <circle cx="128" cy="168" r="8" fill="${s.shade}"/>
-    </svg>`;
-  },
+trolley(c) {
+    const imageMap = {
+      beige: "2-beige.png",
+      gray: "2-gray.png",
+      black: "2-black.png"
+    };
+    return `<div style="width:100%; height:100%; overflow:hidden; border-radius:14px;">
+      <img src="${imageMap[c]}" style="width:100%; height:100%; object-fit:cover; display:block; border-radius:14px;">
+    </div>`;
+}
   cabin(c){
     const s = ELORA_COLORS[c];
     return `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
