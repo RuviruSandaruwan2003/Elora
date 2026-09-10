@@ -25,7 +25,7 @@ trolley(c){
       <rect x="88" y="16" width="24" height="16" rx="4" fill="none" stroke="${s.shade}" stroke-width="4"/>
       <rect x="70" y="70" width="60" height="10" rx="5" fill="${s.shade}" opacity=".8"/>
       <circle cx="72" cy="168" r="8" fill="${s.shade}"/>
-      <circle cx="128" cy="168" r="8" fill="${s.shade}"/><img src="1.jpeg">
+      <circle cx="128" cy="168" r="8" fill="${s.shade}"/>
     </svg>`;
   },
   cabin(c){
