@@ -126,10 +126,10 @@ function renderCartDrawer(){
     el.querySelector('.js-remove').addEventListener('click', () => cartRemove(idx));
   });
 
-const checkoutBtn = document.querySelector('.js-checkout');
-if (checkoutBtn) checkoutBtn.addEventListener('click', () => {
-  window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSemAwC07nmjccQF0OzfqEKxLTn3ik1jLnB0EFM9dBJp8SHAQA/viewform?usp=sharing&ouid=107523573824648904840';
-});
+  const checkoutBtn = document.querySelector('.js-checkout');
+  if (checkoutBtn) checkoutBtn.addEventListener('click', () => {
+    window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSemAwC07nmjccQF0OzfqEKxLTn3ik1jLnB0EFM9dBJp8SHAQA/viewform?usp=sharing&ouid=107523573824648904840';
+  });
   const clearBtn = document.querySelector('.js-clear-cart');
   if(clearBtn) clearBtn.addEventListener('click', () => { cartSave([]); renderCartDrawer(); });
 }
@@ -145,7 +145,7 @@ function closeCart(){
 }
 
 /* ---------------------------- toast ---------------------------- */
-let toastTimer;`
+let toastTimer;
 function showToast(msg){
   const el = document.querySelector('.js-toast');
   if(!el) return;
