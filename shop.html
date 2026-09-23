@@ -6,6 +6,15 @@
 <title>Shop — Elora</title>
 <meta name="description" content="Shop Elora's collection of premium luggage, travel bags and leather shoes.">
 <link rel="stylesheet" href="style.css">
+<style>
+  /* Product photo containers — added so real photos display cleanly
+     instead of the old generated colour art. Safe to move these rules
+     into style.css instead if you prefer keeping styling in one file. */
+  .product-media{width:100%;aspect-ratio:1/1;overflow:hidden;border-radius:8px;background:#f4efe6;}
+  .product-media img{width:100%;height:100%;object-fit:cover;display:block;}
+  .cart-item .thumb{width:64px;height:64px;overflow:hidden;border-radius:8px;background:#f4efe6;flex-shrink:0;}
+  .cart-item .thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+</style>
 </head>
 <body>
 
@@ -63,32 +72,31 @@
     <div>
       <div class="eyebrow">Premium Luggage &amp; Shoes</div>
       <h1>Shop Our Collection</h1>
-    </a>
-  </div>
     </div>
-    <div class="hero-art" id="hero-shop-art" style="background:linear-gradient(135deg,#E6D3B8,#C9A27E); border-radius:8px; padding:30px; display:flex; align-items:center; justify-content:center;">
-      <div style="width:42%;"></div>
+    <div class="hero-art" id="hero-shop-art" style="background:linear-gradient(135deg,#E6D3B8,#C9A27E); border-radius:8px; overflow:hidden;">
+      <img src="images/hero-shop.jpg" alt="Elora luggage and shoes" style="width:100%; height:100%; object-fit:cover; display:block;">
     </div>
   </section>
+
   <div class="duo" style="padding-top:0;">
     <a class="banner" href="shop.html?category=Luggage" style="position:relative; overflow:hidden; background:linear-gradient(120deg,#4A2E1C,#7C4E2E);">
       <img src="3.png" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:0.55;">
       <div style="position:relative; z-index:1;">
         <h3>Travel in Style</h3>
-              <span class="btn btn-ghost btn-sm">Explore Luggage →</span>
+        <span class="btn btn-ghost btn-sm">Explore Luggage →</span>
       </div>
     </a>
     <a class="banner" href="shop.html?category=Shoes" style="position:relative; overflow:hidden; background:linear-gradient(120deg,#2B2420,#6B4226);">
       <img src="4.png" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:0.55;">
       <div style="position:relative; z-index:1;">
         <h3>Step in Style</h3>
-          <span class="btn btn-ghost btn-sm">Explore Shoes →</span>
+        <span class="btn btn-ghost btn-sm">Explore Shoes →</span>
       </div>
     </a>
+  </div>
 
   <!-- SHOP LAYOUT -->
-  <aside>
-    <div class="shop-layout" style="padding-bottom:70px;">
+  <div class="shop-layout" style="padding-bottom:70px;">
     <aside class="filters">
       <h3>Filter by</h3>
 
@@ -184,26 +192,13 @@
 <script src="products.js"></script>
 <script src="app.js"></script>
 <script>
-document.getElementById('hero-shop-art').querySelector('div').innerHTML = eloraArt('cabin', 'olive');
-
-/* build colour filter swatches from the full palette actually used */
-const usedColors = [...new Set(ELORA_PRODUCTS.flatMap(p => p.colors))];
-document.querySelector('.js-color-filters').innerHTML = usedColors.map(c =>
-  `<span class="swatch js-color-filter" data-color="${c}" style="background:${ELORA_COLORS[c].hex}" title="${ELORA_COLORS[c].name}"></span>`
-).join('');
-
 const PAGE_SIZE = 6;
-let state = { q: '', cats: [], prices: [], colors: [], sizes: [], sort: 'newest', page: 1 };
+let state = { q: '', cats: [], sort: 'newest', page: 1 };
 
 /* read query params on load (?q=... or ?category=...) */
 const params = new URLSearchParams(window.location.search);
 if(params.get('q')) state.q = params.get('q');
 if(params.get('category')) state.cats = [params.get('category')];
-
-function priceInRange(price, rangeStr){
-  const [min, max] = rangeStr.split('-').map(Number);
-  return price >= min && price <= max;
-}
 
 function getFiltered(){
   let list = ELORA_PRODUCTS.slice();
@@ -214,15 +209,6 @@ function getFiltered(){
   }
   if(state.cats.length){
     list = list.filter(p => state.cats.includes(p.category));
-  }
-  if(state.prices.length){
-    list = list.filter(p => state.prices.some(r => priceInRange(p.price, r)));
-  }
-  if(state.colors.length){
-    list = list.filter(p => p.colors.some(c => state.colors.includes(c)));
-  }
-  if(state.sizes.length){
-    list = list.filter(p => p.sizes && p.sizes.some(s => state.sizes.includes(String(s))));
   }
 
   switch(state.sort){
@@ -271,9 +257,8 @@ function renderShop(){
 }
 
 function resetFilters(){
-  state = { q:'', cats:[], prices:[], colors:[], sizes:[], sort:'newest', page:1 };
-  document.querySelectorAll('.js-cat, .js-price, .js-size').forEach(el => el.checked = false);
-  document.querySelectorAll('.js-color-filter').forEach(el => el.classList.remove('active'));
+  state = { q:'', cats:[], sort:'newest', page:1 };
+  document.querySelectorAll('.js-cat').forEach(el => el.checked = false);
   document.querySelector('.js-sort').value = 'newest';
   history.replaceState(null, '', 'shop.html');
   renderShop();
@@ -288,37 +273,12 @@ document.querySelectorAll('.js-cat').forEach(el => {
     renderShop();
   });
 });
-document.querySelectorAll('.js-price').forEach(el => el.addEventListener('change', () => {
-  state.prices = [...document.querySelectorAll('.js-price:checked')].map(e => e.value);
-  state.page = 1;
-  renderShop();
-}));
-document.querySelectorAll('.js-size').forEach(el => el.addEventListener('change', () => {
-  state.sizes = [...document.querySelectorAll('.js-size:checked')].map(e => e.value);
-  state.page = 1;
-  renderShop();
-}));
-document.querySelectorAll('.js-color-filter').forEach(el => el.addEventListener('click', () => {
-  el.classList.toggle('active');
-  state.colors = [...document.querySelectorAll('.js-color-filter.active')].map(e => e.dataset.color);
-  state.page = 1;
-  renderShop();
-}));
+
 document.querySelector('.js-sort').addEventListener('change', (e) => {
   state.sort = e.target.value;
   renderShop();
 });
 document.querySelector('.js-clear-filters').addEventListener('click', resetFilters);
-
-/* category banners */
-document.querySelectorAll('[data-cat]').forEach(a => a.addEventListener('click', (e) => {
-  e.preventDefault();
-  state.cats = [a.dataset.cat];
-  document.querySelectorAll('.js-cat').forEach(el => el.checked = el.value === a.dataset.cat);
-  state.page = 1;
-  renderShop();
-  document.querySelector('.shop-layout').scrollIntoView({behavior:'smooth', block:'start'});
-}));
 
 /* live search from the nav flyout also updates this page in place */
 const navSearchForm = document.querySelector('.js-search-form');
