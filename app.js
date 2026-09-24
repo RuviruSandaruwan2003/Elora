@@ -6,6 +6,7 @@
 
 const ELORA_CART_KEY = 'elora_cart_v2';
 const ELORA_WHATSAPP_NUMBER = '94743647717'; // 074 364 7717 written in international format
+const ELORA_IMG_FALLBACK = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f4efe6'/%3E%3Ctext x='100' y='104' font-family='sans-serif' font-size='13' fill='%23a08a6a' text-anchor='middle'%3EImage missing%3C/text%3E%3C/svg%3E";
 
 /* ---------------------------- cart storage ---------------------------- */
 function cartLoad(){
@@ -118,7 +119,7 @@ function renderCartDrawer(){
     const lineTotal = p.price * item.qty;
     return `
       <div class="cart-item" data-idx="${idx}">
-        <div class="thumb"><img src="${p.image}" alt="${p.name}"></div>
+        <div class="thumb"><img src="${p.image}" alt="${p.name}" onerror="this.onerror=null;this.src='${ELORA_IMG_FALLBACK}';"></div>
         <div class="info">
           <h4>${p.name}</h4>
           <div class="meta">${item.size ? 'UK ' + item.size : ''}</div>
@@ -195,7 +196,7 @@ function showToast(msg){
 function buildProductCard(p){
   return `
     <div class="product-card" data-id="${p.id}">
-      <div class="product-media"><img src="${p.image}" alt="${p.name}" loading="lazy"></div>
+      <div class="product-media"><img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src='${ELORA_IMG_FALLBACK}';"></div>
       <div class="product-body">
         <h3 class="product-name">${p.name}</h3>
         <div class="product-price">${eloraFormatPrice(p.price)}</div>
