@@ -1,6 +1,8 @@
 /* ==========================================================================
    ELORA — product catalogue
    Each product uses one real photo (1.png–8.png, one per product).
+   These files must sit in the SAME folder as shop.html, named exactly
+   1.png, 2.png, 3.png ... 8.png (lowercase, correct extension).
    ========================================================================== */
 
 const ELORA_PRODUCTS = [
