@@ -7,6 +7,40 @@
 <meta name="description" content="Elora — premium luggage, travel bags and leather shoes. Your journey, your style, your Elora.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧳</text></svg>">
 <link rel="stylesheet" href="style.css">
+<style>
+  .product-media{width:100%;aspect-ratio:1/1;overflow:hidden;border-radius:8px;background:#f4efe6;}
+  .product-media img{width:100%;height:100%;object-fit:cover;display:block;}
+  .cart-item .thumb{width:64px;height:64px;overflow:hidden;border-radius:8px;background:#f4efe6;flex-shrink:0;}
+  .cart-item .thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+  .hero-art{
+    background:linear-gradient(135deg,#E6D3B8,#C9A27E);
+    border-radius:8px;
+    padding:30px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .hero-art img{
+    max-width:70%;
+    max-height:280px;
+    width:auto;
+    height:auto;
+    object-fit:contain;
+    border-radius:6px;
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+    display:block;
+  }
+  #about-art{
+    max-width:80%;
+    max-height:100%;
+    width:auto;
+    height:auto;
+    object-fit:contain;
+    border-radius:6px;
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+    display:block;
+  }
+</style>
 </head>
 <body>
 
@@ -71,18 +105,17 @@
 <main>
 
   <!-- HERO -->
-     <section class="hero">
+  <section class="hero">
     <div>
       <div class="eyebrow">Luggage · Shoes</div>
       <h1>Move in Style</h1>
       <p>Your journey. Your style. Your Elora. Discover timeless shoes and travel essentials designed for every journey.</p>
       <a href="shop.html" class="btn btn-primary">Shop Now →</a>
     </div>
-    <div class="hero-art" style="background:linear-gradient(135deg,#E6D3B8,#C9A27E); border-radius:8px; padding:30px; display:flex; gap:14px; align-items:flex-end; justify-content:center;">
-      <div style="width:38%;"></div> <img src="2.png">
+    <div class="hero-art">
+      <img src="2.png" alt="Elora featured product">
     </div>
   </section>
-  
 
   <!-- DISCOVER YOUR STYLE -->
   <div class="section-head" style="padding-top:0;">
@@ -124,8 +157,7 @@
   <section class="section section-alt">
     <div class="split">
       <div style="border-radius:8px; overflow:hidden; aspect-ratio:4/3.4; background:linear-gradient(160deg,#C9A27E,#7C4E2E); display:flex; align-items:center; justify-content:center; padding:30px;">
-        <div style="width:55%;" id="about-art"></div>
-        <img src="5.png">
+        <img src="5.png" id="about-art" alt="About Elora">
       </div>
       <div>
         <div class="eyebrow" style="color:var(--brown-500); font-size:.78rem; letter-spacing:.28em; margin-bottom:10px;">About Elora</div>
@@ -159,8 +191,6 @@
     </div>
   </section>
 
-  <!-- TESTIMONIALS -->
-  
   <!-- CTA -->
   <div class="cta-strip">
     <div>
@@ -237,9 +267,6 @@
 <script src="products.js"></script>
 <script src="app.js"></script>
 <script>
-  document.getElementById('about-art').innerHTML = eloraArt('duffel', 'brown');
-  document.querySelector('.hero-art > div').innerHTML = eloraArt('trolley', 'tan');
-
   const featured = ELORA_PRODUCTS.slice(0, 6);
   const grid = document.querySelector('.js-featured-grid');
   grid.innerHTML = featured.map(buildProductCard).join('');
