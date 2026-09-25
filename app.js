@@ -6,6 +6,7 @@
 
 const ELORA_CART_KEY = 'elora_cart_v2';
 const ELORA_WHATSAPP_NUMBER = '94743647717'; // 074 364 7717 written in international format
+const ELORA_CONTACT_EMAIL = 'eloraonlineshop5@gmail.com';
 const ELORA_IMG_FALLBACK = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f4efe6'/%3E%3Ctext x='100' y='104' font-family='sans-serif' font-size='13' fill='%23a08a6a' text-anchor='middle'%3EImage missing%3C/text%3E%3C/svg%3E";
 
 /* ---------------------------- cart storage ---------------------------- */
@@ -260,14 +261,13 @@ function initNav(){
 
   document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeCart(); });
 
-  document.querySelectorAll('.js-newsletter').forEach(form => {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const input = form.querySelector('input[type="email"]');
-      if(input && input.value.trim()){
-        showToast('Thanks for subscribing! Watch your inbox for new arrivals.');
-        form.reset();
-      }
+  document.querySelectorAll('.js-email-us').forEach(btn => {
+    btn.addEventListener('click', () => {
+      try {
+        navigator.clipboard.writeText(ELORA_CONTACT_EMAIL);
+      } catch(e) { /* clipboard not available, ignore */ }
+      showToast(`Opening your email app — our address is ${ELORA_CONTACT_EMAIL} (copied to clipboard)`);
+      window.location.href = `mailto:${ELORA_CONTACT_EMAIL}`;
     });
   });
 }
