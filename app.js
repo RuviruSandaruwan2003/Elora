@@ -41,6 +41,10 @@ function cartSetQty(index, qty){
   cartSave(items);
   renderCartDrawer();
 }
+function cartClear(){
+  cartSave([]);
+  renderCartDrawer();
+}
 function cartCount(){
   return cartLoad().reduce((sum, i) => sum + i.qty, 0);
 }
@@ -149,6 +153,7 @@ function renderCartDrawer(){
         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="vertical-align:-3px; margin-right:6px;"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.7.8-.8.9-.1.2-.3.2-.5.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.4.1-.5.1-.1.2-.3.4-.4.1-.1.2-.2.2-.4.1-.2 0-.3 0-.4-.1-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2 1 2.4c.1.2 1.6 2.5 4 3.5.6.2 1 .4 1.3.5.6.2 1.1.1 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2-.1-.1-.2-.2-.4-.3Z"/></svg>
         Place Order via WhatsApp
       </button>
+      <button type="button" class="btn btn-outline btn-block js-clear-cart" style="margin-top:10px;">Empty Bag</button>
     `;
   }
 
@@ -169,6 +174,13 @@ function renderCartDrawer(){
 
   const whatsappBtn = document.querySelector('.js-whatsapp-order');
   if (whatsappBtn) whatsappBtn.addEventListener('click', openWhatsAppOrder);
+
+  const clearBtn = document.querySelector('.js-clear-cart');
+  if (clearBtn) clearBtn.addEventListener('click', () => {
+    if (confirm('Are you sure you want to empty your bag?')) {
+      cartClear();
+    }
+  });
 }
 
 function openCart(){
