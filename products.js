@@ -11,8 +11,8 @@ const ELORA_PRODUCTS = [
   { id:'backpack',  name:'Elora Travel Backpack',  category:'Luggage', price:18900, image:'3.png' },
   { id:'duffel',    name:'Elora Travel Duffel',    category:'Luggage', price:38500, image:'4.png' },
   { id:'weekender', name:'Elora Weekender Bag',    category:'Luggage', price:24500, image:'5.png' },
-  { id:'loafer',    name:'Elora Leather Loafer',   category:'Shoes',   price:26500, image:'6.png', sizes:[6,7,8,9,10] },
-  { id:'sneaker',   name:'Elora Casual Sneakers',  category:'Shoes',   price:22000, image:'7.png', sizes:[6,7,8,9,10] },
+  { id:'loafer',    name:'Clean White',   category:'Shoes',   price:6990, image:'S1.jpeg', sizes:[36,37,38,39,40] },
+  { id:'sneaker',   name:'Soft Pink',  category:'Shoes',   price:6990, image:'S2.png', sizes:[36,37,38,39,40] },
   { id:'oxford',    name:'Elora Formal Oxford',    category:'Shoes',   price:28000, image:'8.png', sizes:[6,7,8,9,10] },
 ];
 
