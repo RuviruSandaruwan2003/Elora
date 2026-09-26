@@ -8,8 +8,6 @@
 const ELORA_PRODUCTS = [
   { id:'trolley',   name:'Elora Classic Trolley',  category:'Luggage', price:42000, image:'T1.jpeg' },
   { id:'cabin',     name:'Elora Cabin Luggage',    category:'Luggage', price:34000, image:'T2.jpeg' },
-
-   
   { id:'loafer',    name:'Chunky Shoes - Clean White',   category:'Shoes',   price:6990, image:'S1.jpeg', sizes:[36,37,38,39,40] },
   { id:'sneaker',   name:'Chunky Shoes - Soft Pink',  category:'Shoes',   price:6990, image:'S2.jpeg', sizes:[36,37,38,39,40] },
   { id:'oxford',    name:'Air shoes - Green',    category:'Shoes',   price:4500, image:'S3.jpeg', sizes:[42,43,44] },
