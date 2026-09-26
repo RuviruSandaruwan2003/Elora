@@ -3,8 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact — Elora</title>
-<meta name="description" content="Get in touch with Elora — WhatsApp, email, our showroom in Colombo, or send us a message directly.">
+<title>Contact Elora — WhatsApp, Email &amp; Support | Sri Lanka</title>
+<meta name="description" content="Get in touch with Elora for order enquiries, product questions or support. Message us directly on WhatsApp or email — we reply fast.">
+<meta name="keywords" content="contact Elora, Elora WhatsApp, Elora customer service, luggage shop contact Sri Lanka, shoe shop contact Sri Lanka">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Contact Elora — WhatsApp, Email & Support">
+<meta property="og:description" content="Message Elora directly on WhatsApp or email for order enquiries and support.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="2.png">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -88,41 +94,23 @@
           <p>We'll get back to you as soon as possible.</p>
         </div>
       </div>
-     
+    </div>
+
     <div class="contact-form">
-      <div class="eyebrow">Send Us a Message</div>
-      <h2 style="font-size:1.6rem;">We'd love to hear from you.</h2>
-      <form id="contactForm" novalidate>
-        <div class="field">
-          <label for="fullName">Full Name *</label>
-          <input type="text" id="fullName" name="fullName" placeholder="Your name" required>
-        </div>
-        <div class="field">
-          <label for="contactInfo">Email / Phone *</label>
-          <input type="text" id="contactInfo" name="contactInfo" placeholder="Your email or phone number" required>
-        </div>
-        <div class="field">
-          <label for="subject">Subject</label>
-          <select id="subject" name="subject">
-            <option value="">Select a subject</option>
-            <option value="Order enquiry">Order enquiry</option>
-            <option value="Product question">Product question</option>
-            <option value="Delivery & returns">Delivery &amp; returns</option>
-            <option value="Partnership">Partnership</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="message">Message *</label>
-          <textarea id="message" name="message" placeholder="Type your message here…" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary btn-block">Send Message →</button>
-        <div class="form-msg js-form-msg"></div>
-      </form>
+      <div class="eyebrow">Talk To Us</div>
+      <h2 style="font-size:1.6rem;">Got a comment or a question?</h2>
+      <p style="color:var(--ink-soft); margin-top:-6px;">Type freely below — it goes straight to us on WhatsApp, no form-filling needed.</p>
+      <div class="field">
+        <label for="waMessage">Your comment or question</label>
+        <textarea id="waMessage" placeholder="Type your comment or question here…" style="min-height:160px;"></textarea>
+      </div>
+      <button type="button" class="btn btn-primary btn-block js-contact-whatsapp">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="vertical-align:-3px; margin-right:6px;"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.7.8-.8.9-.1.2-.3.2-.5.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.4.1-.5.1-.1.2-.3.4-.4.1-.1.2-.2.2-.4.1-.2 0-.3 0-.4-.1-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2 1 2.4c.1.2 1.6 2.5 4 3.5.6.2 1 .4 1.3.5.6.2 1.1.1 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2-.1-.1-.2-.2-.4-.3Z"/></svg>
+        Send via WhatsApp →
+      </button>
+      <div class="form-msg js-contact-msg"></div>
     </div>
   </div>
-
- 
 </main>
 
 <footer class="site-footer">
@@ -187,35 +175,5 @@
 
 <script src="products.js"></script>
 <script src="app.js"></script>
-<script>
-  document.getElementById('contact-art').innerHTML = eloraArt('weekender', 'brown');
-
-  const form = document.getElementById('contactForm');
-  const msg = document.querySelector('.js-form-msg');
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = form.fullName.value.trim();
-    const contact = form.contactInfo.value.trim();
-    const message = form.message.value.trim();
-
-    if(!name || !contact || !message){
-      msg.textContent = 'Please fill in your name, contact info and message.';
-      msg.className = 'form-msg show err';
-      return;
-    }
-    const looksLikeEmail = /\S+@\S+\.\S+/.test(contact);
-    const looksLikePhone = /^[0-9+\s-]{7,}$/.test(contact);
-    if(!looksLikeEmail && !looksLikePhone){
-      msg.textContent = 'Please enter a valid email address or phone number.';
-      msg.className = 'form-msg show err';
-      return;
-    }
-
-    msg.textContent = `Thanks, ${name}! Your message has been received — we'll reply to ${contact} shortly.`;
-    msg.className = 'form-msg show ok';
-    showToast('Message sent — we\u2019ll be in touch soon.');
-    form.reset();
-  });
-</script>
 </body>
 </html>
