@@ -1,13 +1,21 @@
 /* ==========================================================================
    ELORA — shared front-end behaviour
    Cart persists in localStorage so it follows the shopper across pages.
-   Checkout now sends the full order straight to WhatsApp instead of a form.
+   Checkout sends the full order straight to WhatsApp instead of a form.
+   Product variants (shoe sizes / luggage weight+price options) are
+   selected on the product card before adding to the bag.
    ========================================================================== */
 
-const ELORA_CART_KEY = 'elora_cart_v2';
-const ELORA_WHATSAPP_NUMBER = '94743647717'; // 074 364 7717 written in international format
+const ELORA_CART_KEY = 'elora_cart_v3'; // bumped: cart items now store their own price per size
+const ELORA_WHATSAPP_NUMBER = '94743647717'; // 074 364 7717 in international format
 const ELORA_CONTACT_EMAIL = 'eloraonlineshop5@gmail.com';
 const ELORA_IMG_FALLBACK = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f4efe6'/%3E%3Ctext x='100' y='104' font-family='sans-serif' font-size='13' fill='%23a08a6a' text-anchor='middle'%3EImage missing%3C/text%3E%3C/svg%3E";
+
+/* ---------------------------- price helpers ---------------------------- */
+function eloraLowestPrice(p){
+  if(p.sizeOptions && p.sizeOptions.length) return Math.min(...p.sizeOptions.map(s => s.price));
+  return p.price;
+}
 
 /* ---------------------------- cart storage ---------------------------- */
 function cartLoad(){
@@ -20,12 +28,12 @@ function cartSave(items){
   localStorage.setItem(ELORA_CART_KEY, JSON.stringify(items));
   renderCartCount();
 }
-function cartAdd(productId, size, qty){
+function cartAdd(productId, size, price, qty){
   qty = qty || 1;
   const items = cartLoad();
   const existing = items.find(i => i.id === productId && i.size === size);
   if(existing){ existing.qty += qty; }
-  else{ items.push({ id: productId, size: size || null, qty }); }
+  else{ items.push({ id: productId, size: size || null, price: price, qty }); }
   cartSave(items);
   renderCartDrawer();
 }
@@ -49,11 +57,13 @@ function cartClear(){
 function cartCount(){
   return cartLoad().reduce((sum, i) => sum + i.qty, 0);
 }
+function cartLineTotal(item){
+  const p = eloraFindProduct(item.id);
+  const unit = (typeof item.price === 'number') ? item.price : (p ? eloraLowestPrice(p) : 0);
+  return unit * item.qty;
+}
 function cartTotal(){
-  return cartLoad().reduce((sum, i) => {
-    const p = eloraFindProduct(i.id);
-    return sum + (p ? p.price * i.qty : 0);
-  }, 0);
+  return cartLoad().reduce((sum, i) => sum + cartLineTotal(i), 0);
 }
 function renderCartCount(){
   document.querySelectorAll('.js-cart-count').forEach(el => {
@@ -69,8 +79,9 @@ function buildWhatsAppOrderMessage(){
   const lines = items.map(i => {
     const p = eloraFindProduct(i.id);
     if(!p) return '';
-    const sizeStr = i.size ? ` (UK ${i.size})` : '';
-    return `• ${p.name}${sizeStr} x${i.qty} — ${eloraFormatPrice(p.price * i.qty)}`;
+    const unit = (typeof i.price === 'number') ? i.price : eloraLowestPrice(p);
+    const sizeStr = i.size ? (typeof i.size === 'number' ? ` (UK ${i.size})` : ` (${i.size})`) : '';
+    return `• ${p.name}${sizeStr} x${i.qty} — ${eloraFormatPrice(unit * i.qty)}`;
   }).filter(Boolean).join('\n');
 
   const subtotal = cartTotal();
@@ -98,6 +109,11 @@ function openWhatsAppOrder(){
   const url = `https://wa.me/${ELORA_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   window.open(url, '_blank', 'noopener');
 }
+function openWhatsAppMessage(text){
+  const message = `Hello Elora, ${text}`;
+  const url = `https://wa.me/${ELORA_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  window.open(url, '_blank', 'noopener');
+}
 
 /* ---------------------------- cart drawer UI ---------------------------- */
 function renderCartDrawer(){
@@ -121,13 +137,15 @@ function renderCartDrawer(){
   itemsWrap.innerHTML = items.map((item, idx) => {
     const p = eloraFindProduct(item.id);
     if(!p) return '';
-    const lineTotal = p.price * item.qty;
+    const unit = (typeof item.price === 'number') ? item.price : eloraLowestPrice(p);
+    const lineTotal = unit * item.qty;
+    const sizeLabel = item.size ? (typeof item.size === 'number' ? 'UK ' + item.size : item.size) : '';
     return `
       <div class="cart-item" data-idx="${idx}">
         <div class="thumb"><img src="${p.image}" alt="${p.name}" onerror="this.onerror=null;this.src='${ELORA_IMG_FALLBACK}';"></div>
         <div class="info">
           <h4>${p.name}</h4>
-          <div class="meta">${item.size ? 'UK ' + item.size : ''}</div>
+          <div class="meta">${sizeLabel}</div>
           <div class="row-actions">
             <div class="qty-control">
               <button type="button" class="js-qty-minus" aria-label="Decrease quantity">−</button>
@@ -207,12 +225,35 @@ function showToast(msg){
 
 /* ---------------------------- product card builder ---------------------------- */
 function buildProductCard(p){
+  let sizeHtml = '';
+
+  if(p.sizeOptions && p.sizeOptions.length){
+    sizeHtml = `
+      <div class="size-label">Select size</div>
+      <div class="size-options js-size-options">
+        ${p.sizeOptions.map((s, i) => `
+          <button type="button" class="size-pill ${i===0?'active':''}" data-size="${s.label}" data-price="${s.price}">
+            ${s.label}<span class="size-pill-price">${eloraFormatPrice(s.price)}</span>
+          </button>`).join('')}
+      </div>`;
+  } else if(p.sizes && p.sizes.length){
+    sizeHtml = `
+      <div class="size-label">Select size (UK)</div>
+      <div class="size-options js-size-options">
+        ${p.sizes.map((s, i) => `
+          <button type="button" class="size-pill size-pill-sm ${i===0?'active':''}" data-size="${s}" data-price="${p.price}">${s}</button>`).join('')}
+      </div>`;
+  }
+
+  const priceDisplay = p.sizeOptions ? `From ${eloraFormatPrice(eloraLowestPrice(p))}` : eloraFormatPrice(p.price);
+
   return `
     <div class="product-card" data-id="${p.id}">
       <div class="product-media"><img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src='${ELORA_IMG_FALLBACK}';"></div>
       <div class="product-body">
         <h3 class="product-name">${p.name}</h3>
-        <div class="product-price">${eloraFormatPrice(p.price)}</div>
+        <div class="product-price js-product-price">${priceDisplay}</div>
+        ${sizeHtml}
         <button type="button" class="btn btn-primary js-add-cart">Add to Cart</button>
       </div>
     </div>`;
@@ -221,13 +262,85 @@ function buildProductCard(p){
 function wireProductGrid(root){
   root.querySelectorAll('.product-card').forEach(card => {
     const id = card.dataset.id;
+    const p = eloraFindProduct(id);
+    const options = card.querySelector('.js-size-options');
+    const priceEl = card.querySelector('.js-product-price');
+
+    if(options){
+      options.querySelectorAll('.size-pill').forEach(btn => {
+        btn.addEventListener('click', () => {
+          options.querySelectorAll('.size-pill').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          if(p.sizeOptions && priceEl){
+            priceEl.textContent = eloraFormatPrice(Number(btn.dataset.price));
+          }
+        });
+      });
+    }
+
     card.querySelector('.js-add-cart').addEventListener('click', () => {
-      const p = eloraFindProduct(id);
-      cartAdd(id, null, 1);
-      showToast(`${p.name} added to your bag`);
+      let size = null, price = eloraLowestPrice(p);
+      const activePill = options ? options.querySelector('.size-pill.active') : null;
+      if(activePill){
+        size = p.sizeOptions ? activePill.dataset.size : Number(activePill.dataset.size);
+        price = Number(activePill.dataset.price);
+      }
+      cartAdd(id, size, price, 1);
+      const sizeNote = size ? ` (${typeof size === 'number' ? 'UK ' + size : size})` : '';
+      showToast(`${p.name}${sizeNote} added to your bag`);
       openCart();
     });
   });
+}
+
+/* ---------------------------- email us modal ---------------------------- */
+function buildEmailModal(){
+  if(document.querySelector('.js-email-modal-overlay')) return;
+  const wrap = document.createElement('div');
+  wrap.innerHTML = `
+    <div class="modal-overlay js-email-modal-overlay"></div>
+    <div class="modal-box js-email-modal">
+      <div class="modal-head">
+        <h3>Email Us</h3>
+        <button type="button" class="close-btn js-email-modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="color:var(--ink-soft); font-size:.9rem; margin-top:0;">Write your question or comment below — it opens in your email app, addressed to ${ELORA_CONTACT_EMAIL}.</p>
+        <div class="field">
+          <label for="emailModalSubject">Subject</label>
+          <input type="text" id="emailModalSubject" placeholder="e.g. Order enquiry">
+        </div>
+        <div class="field">
+          <label for="emailModalMessage">Message</label>
+          <textarea id="emailModalMessage" placeholder="Type your message here…" style="min-height:130px;"></textarea>
+        </div>
+        <button type="button" class="btn btn-primary btn-block js-email-modal-send">Send Email →</button>
+      </div>
+    </div>`;
+  document.body.appendChild(wrap);
+
+  document.querySelector('.js-email-modal-close').addEventListener('click', closeEmailModal);
+  document.querySelector('.js-email-modal-overlay').addEventListener('click', closeEmailModal);
+  document.querySelector('.js-email-modal-send').addEventListener('click', () => {
+    const subject = document.getElementById('emailModalSubject').value.trim() || 'Message from Elora website';
+    const message = document.getElementById('emailModalMessage').value.trim();
+    if(!message){
+      showToast('Please type a message first.');
+      return;
+    }
+    window.location.href = `mailto:${ELORA_CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+    closeEmailModal();
+    showToast('Opening your email app…');
+  });
+}
+function openEmailModal(){
+  buildEmailModal();
+  document.querySelector('.js-email-modal-overlay')?.classList.add('open');
+  document.querySelector('.js-email-modal')?.classList.add('open');
+}
+function closeEmailModal(){
+  document.querySelector('.js-email-modal-overlay')?.classList.remove('open');
+  document.querySelector('.js-email-modal')?.classList.remove('open');
 }
 
 /* ---------------------------- nav: search flyout + mobile menu ---------------------------- */
@@ -259,17 +372,33 @@ function initNav(){
   document.querySelector('.js-cart-close')?.addEventListener('click', closeCart);
   document.querySelector('.js-cart-overlay')?.addEventListener('click', closeCart);
 
-  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeCart(); });
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape'){ closeCart(); closeEmailModal(); }
+  });
 
   document.querySelectorAll('.js-email-us').forEach(btn => {
-    btn.addEventListener('click', () => {
-      try {
-        navigator.clipboard.writeText(ELORA_CONTACT_EMAIL);
-      } catch(e) { /* clipboard not available, ignore */ }
-      showToast(`Opening your email app — our address is ${ELORA_CONTACT_EMAIL} (copied to clipboard)`);
-      window.location.href = `mailto:${ELORA_CONTACT_EMAIL}`;
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openEmailModal();
     });
   });
+
+  const waBtn = document.querySelector('.js-contact-whatsapp');
+  if(waBtn){
+    waBtn.addEventListener('click', () => {
+      const textarea = document.getElementById('waMessage');
+      const msg = document.querySelector('.js-contact-msg');
+      const text = textarea ? textarea.value.trim() : '';
+      if(!text){
+        if(msg){ msg.textContent = 'Please type your comment or question first.'; msg.className = 'form-msg show err'; }
+        return;
+      }
+      openWhatsAppMessage(text);
+      if(msg){ msg.textContent = 'Opening WhatsApp with your message…'; msg.className = 'form-msg show ok'; }
+      showToast('Opening WhatsApp…');
+      if(textarea) textarea.value = '';
+    });
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
