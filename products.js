@@ -11,9 +11,11 @@ const ELORA_PRODUCTS = [
   { id:'backpack',  name:'Elora Travel Backpack',  category:'Luggage', price:18900, image:'3.png' },
   { id:'duffel',    name:'Elora Travel Duffel',    category:'Luggage', price:38500, image:'4.png' },
   { id:'weekender', name:'Elora Weekender Bag',    category:'Luggage', price:24500, image:'5.png' },
-  { id:'loafer',    name:'Clean White',   category:'Shoes',   price:6990, image:'S1.jpeg', sizes:[36,37,38,39,40] },
-  { id:'sneaker',   name:'Soft Pink',  category:'Shoes',   price:6990, image:'S2.jpeg', sizes:[36,37,38,39,40] },
-  { id:'oxford',    name:'Elora Formal Oxford',    category:'Shoes',   price:4500, image:'S3.jpeg', sizes:[6,7,8,9,10] },
+  { id:'loafer',    name:'Chunky Shoes - Clean White',   category:'Shoes',   price:6990, image:'S1.jpeg', sizes:[36,37,38,39,40] },
+  { id:'sneaker',   name:'Chunky Shoes - Soft Pink',  category:'Shoes',   price:6990, image:'S2.jpeg', sizes:[36,37,38,39,40] },
+  { id:'oxford',    name:'Air shoes - Green',    category:'Shoes',   price:4500, image:'S3.jpeg', sizes:[42,43,44] },
+   { id:'oxford',    name:'Air shoes - Black',    category:'Shoes',   price:4500, image:'S4.jpeg', sizes:[42,43,44] },
+     { id:'oxford',    name:'Air shoes - Orange',    category:'Shoes',   price:4500, image:'S3.jpeg', sizes:[42,43,44] },
 ];
 
 function eloraFormatPrice(n){
