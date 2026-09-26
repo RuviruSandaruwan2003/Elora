@@ -12,8 +12,8 @@ const ELORA_PRODUCTS = [
   { id:'duffel',    name:'Elora Travel Duffel',    category:'Luggage', price:38500, image:'4.png' },
   { id:'weekender', name:'Elora Weekender Bag',    category:'Luggage', price:24500, image:'5.png' },
   { id:'loafer',    name:'Clean White',   category:'Shoes',   price:6990, image:'S1.jpeg', sizes:[36,37,38,39,40] },
-  { id:'sneaker',   name:'Soft Pink',  category:'Shoes',   price:6990, image:'S2.png', sizes:[36,37,38,39,40] },
-  { id:'oxford',    name:'Elora Formal Oxford',    category:'Shoes',   price:28000, image:'8.png', sizes:[6,7,8,9,10] },
+  { id:'sneaker',   name:'Soft Pink',  category:'Shoes',   price:6990, image:'S2.jpeg', sizes:[36,37,38,39,40] },
+  { id:'oxford',    name:'Elora Formal Oxford',    category:'Shoes',   price:4500, image:'S3.jpeg', sizes:[6,7,8,9,10] },
 ];
 
 function eloraFormatPrice(n){
