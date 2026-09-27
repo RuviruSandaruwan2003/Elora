@@ -8,12 +8,14 @@
 
 /* ==========================================================================
    🚚  DELIVERY SETTINGS — EDIT HERE ONLY  🚚
-   Change these two numbers whenever your delivery pricing changes.
+   Change these numbers whenever your delivery pricing changes.
    Every part of the site (cart drawer + WhatsApp order message) reads
-   from these two values, so you only ever need to edit it in one place.
+   from these values, so you only ever need to edit it in one place.
+   Free delivery applies when EITHER condition below is met.
    ========================================================================== */
-const ELORA_DELIVERY_CHARGE   = 400;   // normal delivery cost, in LKR
-const ELORA_FREE_DELIVERY_QTY = 3;     // order this many items (or more) → free delivery
+const ELORA_DELIVERY_CHARGE     = 400;    // normal delivery cost, in LKR
+const ELORA_FREE_DELIVERY_QTY   = 3;      // order this many items (or more) → free delivery
+const ELORA_FREE_DELIVERY_AMOUNT = 15000; // OR spend this much (or more) → free delivery
 /* ========================================================================== */
 
 const ELORA_CART_KEY = 'elora_cart_v3'; // bumped: cart items now store their own price per size
@@ -84,12 +86,15 @@ function renderCartCount(){
 }
 
 /* ---------------------------- delivery cost ---------------------------- */
-/* Free delivery once the cart holds ELORA_FREE_DELIVERY_QTY items or more;
-   otherwise the flat ELORA_DELIVERY_CHARGE applies. Empty cart = 0. */
+/* Free delivery once EITHER: the cart holds ELORA_FREE_DELIVERY_QTY items
+   or more, OR the subtotal reaches ELORA_FREE_DELIVERY_AMOUNT.
+   Otherwise the flat ELORA_DELIVERY_CHARGE applies. Empty cart = 0. */
 function eloraShippingCost(){
   const qty = cartCount();
   if(qty === 0) return 0;
-  return qty >= ELORA_FREE_DELIVERY_QTY ? 0 : ELORA_DELIVERY_CHARGE;
+  const subtotal = cartTotal();
+  const qualifies = qty >= ELORA_FREE_DELIVERY_QTY || subtotal >= ELORA_FREE_DELIVERY_AMOUNT;
+  return qualifies ? 0 : ELORA_DELIVERY_CHARGE;
 }
 
 /* ---------------------------- WhatsApp checkout ---------------------------- */
@@ -182,11 +187,24 @@ function renderCartDrawer(){
   const shipping = eloraShippingCost();
   const total = subtotal + shipping;
   const qty = cartCount();
-  const remaining = ELORA_FREE_DELIVERY_QTY - qty;
+
+  let deliveryNote = '';
+  if(shipping === 0){
+    deliveryNote = `<div class="delivery-note" style="margin-bottom:14px; color:var(--ok);">🎉 You've unlocked FREE delivery!</div>`;
+  } else {
+    const itemsNeeded = ELORA_FREE_DELIVERY_QTY - qty;
+    const amountNeeded = ELORA_FREE_DELIVERY_AMOUNT - subtotal;
+    // Show whichever route to free delivery is closer for this customer
+    if(itemsNeeded <= 1){
+      deliveryNote = `<div class="delivery-note" style="margin-bottom:14px;">Add ${itemsNeeded} more item${itemsNeeded > 1 ? 's' : ''} for FREE delivery!</div>`;
+    } else {
+      deliveryNote = `<div class="delivery-note" style="margin-bottom:14px;">Add ${itemsNeeded} more items, or spend ${eloraFormatPrice(amountNeeded)} more, for FREE delivery!</div>`;
+    }
+  }
 
   if(summaryWrap){
     summaryWrap.innerHTML = `
-      ${remaining > 0 ? `<div class="delivery-note" style="margin-bottom:14px;">Add ${remaining} more item${remaining > 1 ? 's' : ''} for FREE delivery!</div>` : `<div class="delivery-note" style="margin-bottom:14px; color:var(--ok);">🎉 You've unlocked FREE delivery!</div>`}
+      ${deliveryNote}
       <div class="summary-row"><span>Subtotal</span><span>${eloraFormatPrice(subtotal)}</span></div>
       <div class="summary-row"><span>Delivery</span><span>${shipping === 0 ? 'Free' : eloraFormatPrice(shipping)}</span></div>
       <div class="summary-row total"><span>Total</span><span>${eloraFormatPrice(total)}</span></div>
