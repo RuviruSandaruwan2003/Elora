@@ -160,7 +160,7 @@ function renderCartDrawer(){
   }).join('');
 
   const subtotal = cartTotal();
-  const shipping = subtotal >= 15000 || subtotal === 0 ? 0 : 950;
+  const shipping = subtotal >= 15000 || subtotal === 0 ? 0 : 400;
   const total = subtotal + shipping;
 
   if(summaryWrap){
