@@ -27,8 +27,8 @@ const ELORA_PRODUCTS = [
       { label:'23–30 kg', price:20000 }
     ]
   },
-  { id:'loafer',        name:'Chunky Shoes - Clean White', category:'Shoes', price:6990, image:'S1.jpeg', sizes:[36,37,38,39,40] },
-  { id:'sneaker',       name:'Chunky Shoes - Soft Pink',   category:'Shoes', price:6990, image:'S2.jpeg', sizes:[36,37,38,39,40] },
+  { id:'loafer',        name:'Chunky Shoes - Soft Pink', category:'Shoes', price:6990, image:'S1.jpeg', sizes:[36,37,38,39,40] },
+  { id:'sneaker',       name:'Chunky Shoes - Clean White',   category:'Shoes', price:6990, image:'S2.jpeg', sizes:[36,37,38,39,40] },
   { id:'oxford-green',  name:'Air Shoes - Green',          category:'Shoes', price:4500, image:'S3.jpeg', sizes:[42,43,44] },
   { id:'oxford-black',  name:'Air Shoes - Black',          category:'Shoes', price:4500, image:'S4.jpeg', sizes:[42,43,44] },
   { id:'oxford-orange', name:'Air Shoes - Orange',         category:'Shoes', price:4500, image:'S5.jpeg', sizes:[42,43,44] },
