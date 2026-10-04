@@ -38,7 +38,7 @@ const ELORA_PRODUCTS = [
  { id:'office-black',  name:'Black Star Sneakers ',        category:'Shoes', price:5500, image:'S8.jpeg', sizes:[42,43,44] },
  { id:'office-black',  name:'Silver Star Sneakers ',        category:'Shoes', price:5500, image:'S9.jpeg', sizes:[42,43,44] },   
     { id:'office-black',  name:'Slides',        category:'Shoes', price:5000, image:'S10.jpeg',  },
-    { id:'office-black',  name:'Black Slides ',        category:'Shoes', price:5500, image:'S9.jpeg', sizes:[42,43,44] },
+    { id:'office-black',  name:'Black Slides ',        category:'Shoes', price:5500, image:'11.jpeg', sizes:[42,43,44] },
 ];
 
 function eloraFormatPrice(n){
